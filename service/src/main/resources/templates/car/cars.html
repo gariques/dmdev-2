@@ -5,8 +5,40 @@
     <title>Cars</title>
 </head>
 <body>
-<div th:each="car : ${cars}">
-    <a th:href="@{'/cars/' + ${car.id}}" th:text="${car.model}">Car</a>
-</div>
+    <form action="/cars">
+        <label for="brand"> Brand:
+            <select id="brand" name="brand">
+                <option value="">All brands</option>
+                <option th:each="brand : ${brands}"
+                        th:value="${brand}"
+                        th:text="${brand}"
+                        th:selected="${brand == filter.brand}">Brand</option>
+            </select>
+        </label>
+        <label for="year"> Year:
+            <input id="year" type="text" name="year" th:value="${filter.year}">
+        </label>
+        <label for="category"> Category:
+            <select id="category" name="category">
+                <option value="">Select category</option>
+                <option th:each="category : ${categories}"
+                        th:value="${category}"
+                        th:text="${category}"
+                        th:selected="${category == filter.category}">Category</option>
+            </select>
+        </label>
+        <div>
+            <label for="page"> Page:
+                <input id="page" type="number" name="page" th:value="${cars.metadata.page}">
+            </label>
+            <label for="size"> Size:
+                <input id="size" type="number" name="size" th:value="${cars.metadata.size}">
+            </label>
+        </div>
+        <button type="submit">Filter</button>
+    </form>
+    <div th:each="car : ${cars.content}">
+        <a th:href="@{'/cars/' + ${car.id}}" th:text="|${car.brand} ${car.model}|">Car</a>
+    </div>
 </body>
 </html>
