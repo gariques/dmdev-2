@@ -23,6 +23,5 @@ public abstract class IntegrationTestBase {
     @DynamicPropertySource
     static void postgresProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.datasource.url", container::getJdbcUrl);
-        registry.add("app.image.bucket", () -> System.getProperty("java.io.tmpdir"));
     }
 }

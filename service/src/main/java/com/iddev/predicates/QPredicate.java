@@ -1,15 +1,12 @@
 package com.iddev.predicates;
 
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.Expressions;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -29,12 +26,10 @@ public class QPredicate {
     }
 
     public Predicate buildAnd() {
-        return Optional.ofNullable(ExpressionUtils.allOf(predicates))
-                .orElseGet(() -> Expressions.asBoolean(true).isTrue());
+        return ExpressionUtils.allOf(predicates);
     }
 
     public Predicate buildOr() {
-        return Optional.ofNullable(ExpressionUtils.anyOf(predicates))
-                .orElseGet(() -> Expressions.asBoolean(true).isTrue());
+        return ExpressionUtils.anyOf(predicates);
     }
 }

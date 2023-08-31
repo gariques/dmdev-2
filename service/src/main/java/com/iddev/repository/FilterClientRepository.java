@@ -10,5 +10,6 @@ import java.util.List;
 
 public interface FilterClientRepository {
 
+    List<Client> findClientsByFirstAndLastnames(EntityManager entityManager, ClientFilter filter, EntityGraph<Client> graph);
 
 }

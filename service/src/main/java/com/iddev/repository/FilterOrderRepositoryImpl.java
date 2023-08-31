@@ -19,4 +19,18 @@ public class FilterOrderRepositoryImpl implements FilterOrderRepository{
 
     private final EntityManager entityManager;
 
+    @Override
+    public List<Order> findOrdersByFirstAndLastnames(EntityManager entityManager, ClientFilter filter, EntityGraph<Order> graph) {
+        var predicate = QPredicate.builder()
+                .add(filter.getFirstName(), client.firstName::eq)
+                .add(filter.getLastName(), client.lastName::eq)
+                .buildAnd();
+
+        return new JPAQuery<Order>(entityManager)
+                .select(order)
+                .from(order)
+                .where(predicate)
+                .setHint(GraphSemantic.FETCH.getJpaHintName(), graph)
+                .fetch();
+    }
 }

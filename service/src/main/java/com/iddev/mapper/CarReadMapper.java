@@ -11,14 +11,10 @@ public class CarReadMapper implements Mapper<Car, CarReadDto> {
     public CarReadDto map(Car object) {
         return CarReadDto.builder()
                 .id(object.getId())
-                .brand(object.getBrand())
                 .model(object.getModel())
-                .manufactureYear(object.getManufactureYear())
-                .category(object.getCategory())
-                .transmission(object.getTransmission())
+                .colour(object.getColour())
                 .price(object.getPrice())
-                .isAvailable(object.getIsAvailable())
-                .image(object.getImage())
+                .status(object.getStatus())
                 .build();
     }
 }

@@ -24,13 +24,7 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "id")
 public class Client extends User {
 
-    private Integer age;
-
-    private String driverLicenseNumber;
-
-    private String passportNumber;
-
-    private String phoneNumber;
+    private String driverLicenseId;
 
     @Builder.Default
     @OneToMany(mappedBy = "client")

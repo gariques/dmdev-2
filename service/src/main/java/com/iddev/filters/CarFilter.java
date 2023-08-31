@@ -1,7 +1,6 @@
 package com.iddev.filters;
 
-import com.iddev.enums.CarBrand;
-import com.iddev.enums.CarCategory;
+import com.iddev.enums.CarStatus;
 import lombok.Builder;
 import lombok.Value;
 
@@ -9,9 +8,7 @@ import lombok.Value;
 @Builder
 public class CarFilter {
 
-    CarBrand brand;
-    Integer year;
-    CarCategory category;
+    CarStatus status;
+    String colour;
     Integer price;
-    Boolean isAvailable;
 }

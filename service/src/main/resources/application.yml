@@ -11,7 +11,3 @@ spring:
       format_sql: true
       hbm2ddl.auto: validate
     open-in-view: false
-
-app:
-  image:
-    bucket: "C:/Users/IGOR/IdeaProjects/dmdev-2/images"

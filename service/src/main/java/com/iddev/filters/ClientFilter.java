@@ -7,5 +7,6 @@ import lombok.Value;
 @Builder
 public class ClientFilter {
 
-    Integer age;
+    String firstName;
+    String lastName;
 }

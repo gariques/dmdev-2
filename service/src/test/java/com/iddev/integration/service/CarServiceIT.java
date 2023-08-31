@@ -1,10 +1,8 @@
 package com.iddev.integration.service;
 
-import com.iddev.enums.CarBrand;
-import com.iddev.enums.CarCategory;
-import com.iddev.enums.Transmission;
 import com.iddev.service.CarService;
 import com.iddev.dto.CarCreateEditDto;
+import com.iddev.enums.CarStatus;
 import com.iddev.integration.IntegrationTestBase;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -32,41 +30,32 @@ public class CarServiceIT extends IntegrationTestBase {
     void findById() {
         var maybeCar = carService.findById(LEXUS);
         assertTrue(maybeCar.isPresent());
-        maybeCar.ifPresent(car -> assertEquals("LX570", car.getModel()));
+        maybeCar.ifPresent(car -> assertEquals("Lexus LX570", car.getModel()));
     }
 
     @Test
     void create() {
         CarCreateEditDto carDto = CarCreateEditDto.builder()
-                .brand(CarBrand.TOYOTA)
                 .model("testmodel")
-                .manufactureYear(2020)
-                .category(CarCategory.STANDARD)
-                .transmission(Transmission.AUTO)
-                .price(3500)
-                .isAvailable(true)
+                .colour("black")
+                .price(3000)
+                .status(CarStatus.AVAILABLE)
                 .build();
         var actualResult = carService.create(carDto);
 
-        assertSame(carDto.getBrand(), actualResult.getBrand());
         assertEquals(carDto.getModel(), actualResult.getModel());
-        assertEquals(carDto.getManufactureYear(), actualResult.getManufactureYear());
-        assertSame(carDto.getCategory(), actualResult.getCategory());
-        assertSame(carDto.getTransmission(), actualResult.getTransmission());
+        assertEquals(carDto.getColour(), actualResult.getColour());
         assertEquals(carDto.getPrice(), actualResult.getPrice());
-        assertSame(carDto.getIsAvailable(), actualResult.getIsAvailable());
+        assertSame(carDto.getStatus(), actualResult.getStatus());
     }
 
     @Test
     void update() {
         CarCreateEditDto carDto = CarCreateEditDto.builder()
-                .brand(CarBrand.TOYOTA)
                 .model("testmodel")
-                .manufactureYear(2020)
-                .category(CarCategory.STANDARD)
-                .transmission(Transmission.AUTO)
-                .price(3500)
-                .isAvailable(true)
+                .colour("black")
+                .price(3000)
+                .status(CarStatus.AVAILABLE)
                 .build();
 
         var actualResult = carService.update(LEXUS, carDto);
@@ -74,23 +63,16 @@ public class CarServiceIT extends IntegrationTestBase {
         assertTrue(actualResult.isPresent());
 
         actualResult.ifPresent(car -> {
-            assertSame(carDto.getBrand(), car.getBrand());
             assertEquals(carDto.getModel(), car.getModel());
-            assertEquals(carDto.getManufactureYear(), car.getManufactureYear());
-            assertSame(carDto.getCategory(), car.getCategory());
-            assertSame(carDto.getTransmission(), car.getTransmission());
+            assertEquals(carDto.getColour(), car.getColour());
             assertEquals(carDto.getPrice(), car.getPrice());
-            assertSame(carDto.getIsAvailable(), car.getIsAvailable());
+            assertSame(carDto.getStatus(), car.getStatus());
         });
     }
 
     @Test
     void delete() {
-        assertTrue(carService.delete(LEXUS));
-    }
-
-    @Test
-    void deleteFailed() {
         assertFalse(carService.delete(999L));
+        assertTrue(carService.delete(LEXUS));
     }
 }

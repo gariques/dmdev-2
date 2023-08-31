@@ -3,12 +3,6 @@ package com.iddev.mapper;
 import com.iddev.dto.CarCreateEditDto;
 import com.iddev.entity.Car;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Optional;
-import java.util.function.Predicate;
-
-import static java.util.function.Predicate.not;
 
 @Component
 public class CarCreateEditMapper implements Mapper<CarCreateEditDto, Car> {
@@ -28,16 +22,9 @@ public class CarCreateEditMapper implements Mapper<CarCreateEditDto, Car> {
     }
 
     private void copy(CarCreateEditDto object, Car car) {
-        car.setBrand(object.getBrand());
         car.setModel(object.getModel());
-        car.setManufactureYear(object.getManufactureYear());
-        car.setCategory(object.getCategory());
-        car.setTransmission(object.getTransmission());
+        car.setColour(object.getColour());
         car.setPrice(object.getPrice());
-        car.setIsAvailable(object.getIsAvailable());
-
-        Optional.ofNullable(object.getImage())
-                .filter(not(MultipartFile::isEmpty))
-                .ifPresent(image -> car.setImage(image.getOriginalFilename()));
+        car.setStatus(object.getStatus());
     }
 }
