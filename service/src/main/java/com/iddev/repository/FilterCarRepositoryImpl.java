@@ -19,9 +19,12 @@ public class FilterCarRepositoryImpl implements FilterCarRepository {
     private final EntityManager entityManager;
 
     @Override
-    public List<Car> findAllAvailableCars(CarFilter filter, EntityGraph<Car> graph) {
+    public List<Car> findAllByFilter(CarFilter filter, EntityGraph<Car> graph) {
         var predicate = QPredicate.builder()
-                .add(filter.getStatus(), car.status::eq)
+                .add(filter.getBrand(), car.brand::eq)
+                .add(filter.getYear(), car.manufactureYear::eq)
+                .add(filter.getCategory(), car.category::eq)
+                .add(filter.getIsAvailable(), car.isAvailable::eq)
                 .buildAnd();
 
         return new JPAQuery<Car>(entityManager)
@@ -32,17 +35,4 @@ public class FilterCarRepositoryImpl implements FilterCarRepository {
                 .fetch();
     }
 
-    @Override
-    public List<Car> findCarsByColour(CarFilter filter, EntityGraph<Car> graph) {
-        var predicate = QPredicate.builder()
-                .add(filter.getColour(), car.colour::eq)
-                .buildAnd();
-
-        return new JPAQuery<Car>(entityManager)
-                .select(car)
-                .from(car)
-                .where(predicate)
-                .setHint(GraphSemantic.FETCH.getJpaHintName(), graph)
-                .fetch();
-    }
 }
