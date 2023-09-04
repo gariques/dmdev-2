@@ -1,2 +1,4 @@
-package com.iddev.validation.group;public interface CreateAction {
+package com.iddev.validation.group;
+
+public interface CreateAction {
 }

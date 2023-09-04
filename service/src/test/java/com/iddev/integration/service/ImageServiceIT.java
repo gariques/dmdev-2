@@ -26,7 +26,6 @@ public class ImageServiceIT extends IntegrationTestBase {
 
     private final ImageService imageService;
 
-    @SneakyThrows
     @Test
     void uploadImage() {
         String imagePath = "test.jpeg";

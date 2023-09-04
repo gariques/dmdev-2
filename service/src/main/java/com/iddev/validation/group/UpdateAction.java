@@ -1,2 +1,4 @@
-package com.iddev.validation.group;public interface UpdateAction {
+package com.iddev.validation.group;
+
+public interface UpdateAction {
 }

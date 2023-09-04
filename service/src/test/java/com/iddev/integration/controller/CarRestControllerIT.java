@@ -6,15 +6,21 @@ import com.iddev.enums.CarBrand;
 import com.iddev.enums.CarCategory;
 import com.iddev.enums.Transmission;
 import com.iddev.integration.IntegrationTestBase;
+import com.iddev.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -30,13 +36,15 @@ public class CarRestControllerIT extends IntegrationTestBase {
 
     private final ObjectMapper objectMapper;
 
+    @Mock
+    private final ImageService imageService;
+
     @Test
     void findAll() throws Exception {
         mockMvc.perform(get("/api/v1/cars"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(4)));
-
     }
 
     @Test
@@ -53,7 +61,6 @@ public class CarRestControllerIT extends IntegrationTestBase {
                         jsonPath("$.price").value(3000),
                         jsonPath("$.isAvailable").value(true)
                 );
-        ;
     }
 
     @Test
@@ -88,6 +95,9 @@ public class CarRestControllerIT extends IntegrationTestBase {
                 .isAvailable(false)
                 .build();
         var json = objectMapper.writeValueAsString(testmodel);
+        doNothing().when(imageService).upload(any(String.class), any());
+        var mockMultipartFile = new MockMultipartFile(
+                "name", "some-way", "content", "inpusStream".getBytes());
 
         mockMvc.perform(put("/api/v1/cars/1/update")
                         .contentType(MediaType.APPLICATION_JSON)
