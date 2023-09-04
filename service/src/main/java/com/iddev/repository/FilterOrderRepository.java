@@ -9,5 +9,4 @@ import java.util.List;
 
 public interface FilterOrderRepository {
 
-    List<Order> findOrdersByFirstAndLastnames(EntityManager entityManager, ClientFilter filter, EntityGraph<Order> graph);
 }
