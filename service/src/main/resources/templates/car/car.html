@@ -5,53 +5,54 @@
     <title>Car</title>
 </head>
 <body>
-<form th:action="@{/cars/{carId}/update(carId=${car.id})}" enctype="multipart/form-data" method="post">
-    <label for="brand"> Brand:
-        <select id="brand" name="brand">
-            <option th:each="brand : ${brands}"
-                    th:value="${brand}"
-                    th:selected="${brand == car.brand}"
-                    th:text="${brand}">Brand</option>
-        </select>
-    </label><br>
-    <label for="model"> Model:
-        <input id="model" type="text" name="model" th:value="*{car.model}">
-    </label><br>
-    <label for="manufactureYear"> Year:
-        <input id="manufactureYear" type="number" name="manufactureYear" th:value="${car.manufactureYear}">
-    </label><br>
-    <label for="category"> Category:
-        <select id="category" name="category">
-            <option th:each="category : ${categories}"
-                    th:value="${category}"
-                    th:selected="${category == car.category}"
-                    th:text="${category}">Category</option>
-        </select>
-    </label><br>
-    <label for="transmission"> Transmission:
-        <select id="transmission" name="transmission">
-            <option th:each="transmission : ${transmissions}"
-                    th:value="${transmission}"
-                    th:selected="${transmission == car.transmission}"
-                    th:text="${transmission}">Transmission</option>
-        </select>
-    </label><br>
-    <label for="price"> Price:
-        <input id="price" type="number" name="price" th:value="${car.price}">
-    </label><br>
-    <label for="isAvailable"> Availability:
-        <input id="isAvailable" type="text" name="isAvailable" th:value="${car.isAvailable}">
-    </label><br>
-    <div th:if="${car.image}">
-        <img width="250" height="200" th:src="@{/api/v1/cars/{carId}/carImage(carId=${car.id})}">
-    </div>
-    <label for="image"> Image:
-        <input id="image" type="file" name="image">
-    </label><br>
-    <button type="submit">Update</button>
-</form>
-<form th:action="@{/cars/{carId}/delete(carId=${car.id})}" alt="Car image" method="post">
-    <button type="submit">Delete</button>
-</form>
+    <div th:insert="~{fragment :: header}"></div>
+    <form th:action="@{/cars/{carId}/update(carId=${car.id})}" enctype="multipart/form-data" method="post">
+        <label for="brand"> Brand:
+            <select id="brand" name="brand">
+                <option th:each="brand : ${brands}"
+                        th:value="${brand}"
+                        th:selected="${brand == car.brand}"
+                        th:text="${brand}">Brand</option>
+            </select>
+        </label><br>
+        <label for="model"> Model:
+            <input id="model" type="text" name="model" th:value="*{car.model}">
+        </label><br>
+        <label for="manufactureYear"> Year:
+            <input id="manufactureYear" type="number" name="manufactureYear" th:value="${car.manufactureYear}">
+        </label><br>
+        <label for="category"> Category:
+            <select id="category" name="category">
+                <option th:each="category : ${categories}"
+                        th:value="${category}"
+                        th:selected="${category == car.category}"
+                        th:text="${category}">Category</option>
+            </select>
+        </label><br>
+        <label for="transmission"> Transmission:
+            <select id="transmission" name="transmission">
+                <option th:each="transmission : ${transmissions}"
+                        th:value="${transmission}"
+                        th:selected="${transmission == car.transmission}"
+                        th:text="${transmission}">Transmission</option>
+            </select>
+        </label><br>
+        <label for="price"> Price:
+            <input id="price" type="number" name="price" th:value="${car.price}">
+        </label><br>
+        <label for="isAvailable"> Availability:
+            <input id="isAvailable" type="text" name="isAvailable" th:value="${car.isAvailable}">
+        </label><br>
+        <div th:if="${car.image}">
+            <img width="250" height="200" th:src="@{/api/v1/cars/{carId}/carImage(carId=${car.id})}">
+        </div>
+        <label for="image"> Image:
+            <input id="image" type="file" name="image">
+        </label><br>
+        <button type="submit">Update</button>
+    </form>
+    <form th:action="@{/cars/{carId}/delete(carId=${car.id})}" alt="Car image" method="post">
+        <button type="submit">Delete</button>
+    </form>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class UserCreateEditDto {
 
     String firstName;
     String lastName;
-    String login;
+    String username;
     @NotBlank(groups = CreateAction.class)
     String rawPassword;
     Role role;

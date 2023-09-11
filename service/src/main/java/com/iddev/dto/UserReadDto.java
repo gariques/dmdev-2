@@ -11,7 +11,7 @@ public class UserReadDto {
     Long id;
     String firstName;
     String lastName;
-    String login;
+    String username;
     String password;
     Role role;
 }

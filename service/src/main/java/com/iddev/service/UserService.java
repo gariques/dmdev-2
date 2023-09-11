@@ -8,6 +8,7 @@ import com.iddev.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -34,6 +35,7 @@ public class UserService implements UserDetailsService {
                 .toList();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Page<UserReadDto> findAll(Pageable pageable) {
         return userRepository.findAll(pageable)
                 .map(userReadMapper::map);
@@ -73,13 +75,13 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return userRepository.findByLogin(login)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
                 .map(user -> new User(
-                        user.getLogin(),
+                        user.getUsername(),
                         user.getPassword(),
                         Collections.singleton(user.getRole())
                 ))
-                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + login));
+                .orElseThrow(() -> new UsernameNotFoundException("Failed to retrieve user: " + username));
     }
 }

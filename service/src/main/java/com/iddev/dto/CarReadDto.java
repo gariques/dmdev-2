@@ -2,7 +2,6 @@ package com.iddev.dto;
 
 import com.iddev.enums.CarBrand;
 import com.iddev.enums.CarCategory;
-import com.iddev.enums.CarStatus;
 import com.iddev.enums.Transmission;
 import lombok.Builder;
 import lombok.Value;

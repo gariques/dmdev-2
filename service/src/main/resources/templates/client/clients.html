@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients</title>
+</head>
+<body>
+    <div th:insert="~{fragment :: header}"></div>
+    <form action="/clients">
+        <div>
+            <label for="page">Page:
+                <input id="page" type="number" name="page" th:value="${clients.metadata.page}">
+            </label>
+            <label for="size">Size:
+                <input id="size" type="number" name="size" th:value="${clients.metadata.size}">
+            </label>
+        </div>
+        <button type="submit">Filter</button>
+    </form>
+    <div th:each="user : ${clients.content}">
+        <a th:href="@{'/clients/' + ${client.id}}" th:text="|${client.id}. ${client.driverLicenseNumber} ${client.phoneNumber}|">Client</a>
+    </div>
+</body>
+</html>
