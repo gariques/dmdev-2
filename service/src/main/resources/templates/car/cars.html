@@ -5,13 +5,14 @@
     <title>Cars</title>
 </head>
 <body>
+    <div th:insert="~{fragment :: header}"></div>
     <form action="/cars">
         <label for="brand"> Brand:
             <select id="brand" name="brand">
                 <option value="">All brands</option>
                 <option th:each="brand : ${brands}"
                         th:value="${brand}"
-                        th:text="${brand}"
+                        th:text="${brand.displayBrand}"
                         th:selected="${brand == filter.brand}">Brand</option>
             </select>
         </label>
@@ -37,8 +38,17 @@
         </div>
         <button type="submit">Filter</button>
     </form>
+    <form action="/cars">
+        <button type="submit">Clear filter</button>
+    </form>
     <div th:each="car : ${cars.content}">
         <a th:href="@{'/cars/' + ${car.id}}" th:text="|${car.brand} ${car.model}|">Car</a>
+    </div>
+    <div>
+        <a th:if="${currentPage > 0}" th:href="@{'/cars?brand=&year=&category=&page=' + ${currentPage - 1} +'&size=2'}">Previous</a>
+        <span th:unless="${currentPage > 0}">Previous</span>
+        <a th:if="${currentPage + 1 < totalPages}" th:href="@{'/cars?brand=' + ${filter.brand} +'&year=' + ${filter.year} +'&category=' + ${filter.category} +'&page=' + ${currentPage + 1} +'&size=2'}">Next</a>
+        <a th:unless="${currentPage + 1 < totalPages}">Next</a>
     </div>
 </body>
 </html>

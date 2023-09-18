@@ -5,6 +5,7 @@
     <title>Users</title>
 </head>
 <body>
+    <div th:insert="~{fragment :: header}"></div>
     <form action="/users">
         <div>
             <label for="page">Page:
@@ -17,7 +18,7 @@
         <button type="submit">Filter</button>
     </form>
     <div th:each="user : ${users.content}">
-        <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.id}. ${user.firstName} ${user.login} ${user.lastName}|">User</a>
+        <a th:href="@{'/users/' + ${user.id}}" th:text="|${user.id}. ${user.firstName} ${user.username} ${user.lastName}|">User</a>
     </div>
 </body>
 </html>

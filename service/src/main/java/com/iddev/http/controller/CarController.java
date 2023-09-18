@@ -12,6 +12,7 @@ import com.iddev.dto.CarCreateEditDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +32,12 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping()
-    public String findAll(Model model, CarFilter filter, Pageable pageable) {
+    public String findAll(Model model, CarFilter filter, @PageableDefault(value = 4) Pageable pageable) {
         var page = carService.findAll(filter, pageable);
+        var currentPage = page.getNumber();
+        var totalPages = page.getTotalPages();
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("cars", PageResponse.of(page));
         model.addAttribute("filter", filter);
         model.addAttribute("brands", CarBrand.values());

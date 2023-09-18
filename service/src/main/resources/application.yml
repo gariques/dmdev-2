@@ -12,6 +12,9 @@ spring:
       hbm2ddl.auto: validate
     open-in-view: false
 
+  messages:
+    basename: messages
+
 app:
   image:
     bucket: "C:/Users/IGOR/IdeaProjects/dmdev-2/images"

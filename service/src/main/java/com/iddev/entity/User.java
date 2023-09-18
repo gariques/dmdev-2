@@ -33,7 +33,7 @@ public class User {
 
     private String lastName;
 
-    private String login;
+    private String username;
 
     private String password;
 
