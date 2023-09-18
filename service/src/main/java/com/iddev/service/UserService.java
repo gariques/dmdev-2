@@ -1,6 +1,7 @@
 package com.iddev.service;
 
 import com.iddev.dto.UserCreateEditDto;
+import com.iddev.dto.CustomUserDetails;
 import com.iddev.dto.UserReadDto;
 import com.iddev.mapper.UserCreateEditMapper;
 import com.iddev.mapper.UserReadMapper;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,6 +41,7 @@ public class UserService implements UserDetailsService {
                 .map(userReadMapper::map);
     }
 
+    @PreAuthorize("#id == authentication.principal.id or hasAuthority('ADMIN')")
     public Optional<UserReadDto> findById(Long id) {
         return userRepository.findById(id)
                 .map(userReadMapper::map);
@@ -77,7 +78,8 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
-                .map(user -> new User(
+                .map(user -> new CustomUserDetails(
+                        user.getId(),
                         user.getUsername(),
                         user.getPassword(),
                         Collections.singleton(user.getRole())
