@@ -6,7 +6,7 @@
 </head>
 <body>
     <div th:fragment="header" style="float: right">
-        <span th:text="${#authentication.principal.username}">Username</span>
+        <a th:href="@{'/users/' + ${#authentication.principal.id}}" th:text="${#authentication.principal.username}">Username</a>
         <form action="/logout" method="post">
             <button type="submit">Log out</button>
         </form>

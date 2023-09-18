@@ -45,9 +45,9 @@
         <a th:href="@{'/cars/' + ${car.id}}" th:text="|${car.brand} ${car.model}|">Car</a>
     </div>
     <div>
-        <a th:if="${currentPage > 0}" th:href="@{'/cars?brand=&year=&category=&page=' + ${currentPage - 1} +'&size=2'}">Previous</a>
+        <a th:if="${currentPage > 0}" th:href="@{'/cars?brand=' + ${filter.brand ?: ''} +'&year=' + ${filter.year ?: ''} +'&category=' + ${filter.category ?: ''} +'&page=' + ${currentPage - 1} +'&size=' + ${cars.metadata.size}}">Previous</a>
         <span th:unless="${currentPage > 0}">Previous</span>
-        <a th:if="${currentPage + 1 < totalPages}" th:href="@{'/cars?brand=' + ${filter.brand} +'&year=' + ${filter.year} +'&category=' + ${filter.category} +'&page=' + ${currentPage + 1} +'&size=2'}">Next</a>
+        <a th:if="${currentPage + 1 < totalPages}" th:href="@{'/cars?brand=' + ${filter.brand ?: ''} +'&year=' + ${filter.year ?: ''} +'&category=' + ${filter.category ?: ''} +'&page=' + ${currentPage + 1} +'&size=' + ${cars.metadata.size}}">Next</a>
         <a th:unless="${currentPage + 1 < totalPages}">Next</a>
     </div>
 </body>
